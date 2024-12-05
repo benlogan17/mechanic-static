@@ -6,12 +6,12 @@ export const SocialIcons = () => {
         <Container className='container m-auto'>
             <Row className="m-3">
                 <Col>
-                    <h1 className="text-center">Contact at </h1>
+                    <h1 className="text-center">Contact</h1>
                 </Col>
             </Row>
-            <Row>
+            <Row className="mb-5">
                 {
-                    ["www.facebook.com", "www.twitter.com", "www.instagram.com"].map((url, index) => 
+                    ["https://www.facebook.com/farmmachinerypartsni"].map((url, index) => 
                         <Col className="text-center" key={`SocialIcon_${index}`}>
                             <SocialIcon url={url}/>
                         </Col>
