@@ -1,25 +1,31 @@
 import './App.css';
 import { ImageWithTextBelow } from './components/ImageWithTextBelow';
-import Digger from './images/image_1.jpg'
-import { SocialIcon } from 'react-social-icons';
+import { SocialIcons } from './components/SocialIcons';
 
 function App() {
   return (
-    <div className="d-flex flex-column ">
-      <div className='fs-1 bg-primary text-center mb-3 p-3 title-custom'>Alan Irvine Mechanic</div>
+    <div className="d-flex flex-column container-bg">
+      <div className='fs-1 bg-primary text-center mb-3 p-3 title-custom'>Farm Machinery Parts NI</div>
 
       <ImageWithTextBelow 
-        image_url={Digger}
+        image_url={"https://storage.googleapis.com/website-bucket-05122024/images/front-side-klass.JPG"}
         content="Alan has been a mechanic for over 5 years with a wealth of experience in many vehicles including tractors and diggers"
+        alt="digger front side"
       />
 
-      <div className='m-3'>
-        <h1>Contact at </h1>
-        <SocialIcon url="www.facebook.com" className='mx-1'/>
-        <SocialIcon url="www.twitter.com" className='mx-1'/>
-        <SocialIcon url="www.instagram.com" className='mx-1'/>
-      </div>
+      <ImageWithTextBelow 
+        image_url={"https://storage.googleapis.com/website-bucket-05122024/images/klass-side.JPG"}
+        content="Alan has always delivered high quality work over his time as a mechanic."
+        alt="digger side"
+      />
 
+      <ImageWithTextBelow 
+        image_url={"https://storage.googleapis.com/website-bucket-05122024/images/klass-reverse-side.JPG"}
+        content="Alan has a keen attention to detail that ensures customers are satisfied with the work he produces."
+        alt="digger reverse side"
+      />
+
+      <SocialIcons />
     </div>
   );
 }
