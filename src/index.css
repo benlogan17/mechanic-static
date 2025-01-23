@@ -14,13 +14,13 @@ code {
 
 .title-custom {
   color: white;
+  background-color: #b5a9b8;
 }
 
 .tile-custom {
   background-color: white;
   border-bottom: black solid 2px;
   border-top: black solid 2px;
-  /* border-radius: 20px; */
 }
 
 .fade-in-section {

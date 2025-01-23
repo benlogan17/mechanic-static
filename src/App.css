@@ -29,7 +29,16 @@
 }
 
 .container-bg {
-  background-color: lightgrey;
+  background-color: white;
+}
+
+.claas-font {
+  font-family: "Bungee", sans-serif;
+  color: red;
+}
+
+.bg-red {
+  color: red;
 }
 
 @keyframes App-logo-spin {
