@@ -1,13 +1,13 @@
-import { Container, Row } from "react-bootstrap"
+import { Container, Row, Image } from "react-bootstrap"
 
-export const ImageWithTextBelow = ({content, image_url, alt}) => {
+export const ImageWithTextBelow = ({content, alt, id}) => {
     return (
         <Container className={`w-75 m-auto tile-custom p-3`}>
             <Row>
-                <img 
-                    src={image_url}
+                <img
                     alt={alt}
                     className="col-lg-5 m-auto"
+                    id={"image-home-" + id}
                 />
             </Row>
             <Row>

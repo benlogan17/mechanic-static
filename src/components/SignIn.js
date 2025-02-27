@@ -14,7 +14,7 @@ export const SignIn = () => {
         const password = event.target.formBasicPassword.value
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => { 
-            useNavigate("/home")
+            // useNavigate("/home")
         })
         .catch((error) => {
             setError("Could not sign in. Please try again")
