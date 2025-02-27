@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 
 export const SignIn = () => {
     const [error, setError] = useState(null)
+    const navigate = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -14,7 +15,7 @@ export const SignIn = () => {
         const password = event.target.formBasicPassword.value
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => { 
-            // useNavigate("/home")
+            navigate("/home")
         })
         .catch((error) => {
             setError("Could not sign in. Please try again")

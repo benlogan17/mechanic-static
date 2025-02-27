@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { getFirestore, getDocs, collection } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,4 +36,32 @@ const downloadAndSetImgUrl = (imageLocation, imgId) => {
   });
 }
 
-export {auth, app, downloadAndSetImgUrl}
+const getFullColllection = async (collectionName) => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  const docs = []
+  querySnapshot.forEach(element => {
+    docs.push(element.data())
+  });
+
+  return docs
+}
+
+const getHomeInfo = async () => {
+  return getFullColllection("home-page-info")
+}
+
+const getPartsToSell = async () => {
+  return getFullColllection("items")
+}
+
+const uploadImage = (image, title) => {
+  const storage = getStorage(app)
+  const storageRef = ref(storage, title);
+
+  // 'file' comes from the Blob or File API
+  uploadBytes(storageRef, image).then((snapshot) => {
+    console.log('Uploaded a blob or file!');
+  });
+}
+
+export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage}
