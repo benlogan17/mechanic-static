@@ -4,11 +4,14 @@ import { SocialIcons } from './components/SocialIcons';
 import { BrowserRouter, Route, Routes } from "react-router";
 import { ItemPage } from './components/ItemPage';
 import { MenuBar } from './components/NavBar/MenuBar';
+// import {auth} from '';
+// import {useAuthState} from 'react-firebase-hooks/auth';
+import { SignIn } from './components/SignIn';
 
 const App = () => {
+  // const [user] = useAuthState(auth);
   return (
     <div className="d-flex flex-column container-bg">
-      
       <BrowserRouter>
         <MenuBar />
         <div className='fs-1 text-center mb-3 p-3 title-custom'>
@@ -17,7 +20,9 @@ const App = () => {
         </div>
         <Routes>
           <Route path="/" element={<MainPage />}/>
+          <Route path="/home" element={<MainPage />}/>
           <Route path="/items" element={<ItemPage />}/>
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </BrowserRouter>
 

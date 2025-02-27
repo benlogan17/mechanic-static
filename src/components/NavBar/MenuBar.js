@@ -1,12 +1,20 @@
-import { Cross } from 'hamburger-react';
-import { slide as Menu } from 'react-burger-menu';
-import { MenuItem } from './MenuItem';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 export const MenuBar = () => {
     return (
-    <Menu customBurgerIcon={<Cross />}>
-        <MenuItem label="Home" link="/" />
-        <MenuItem label="Items" link="/items" />
-    </Menu>
+        <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          <Navbar.Brand href="/home">Home</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="/items">Items</Nav.Link>
+              <Nav.Link href="/signin">Sign In</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     )
 }
