@@ -1,4 +1,5 @@
 import { Card, Button } from "react-bootstrap"
+import { auth } from "../../utils/firebase.utils"
 
 export const CardContainer = ({title, body, id}) => {
     return (
@@ -9,7 +10,9 @@ export const CardContainer = ({title, body, id}) => {
             <Card.Text>
             {body}
             </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
+            {
+                auth.currentUser !== null ? <Button variant="warning">Delete Part</Button> : <></>
+            }
         </Card.Body>
         </Card>
     )

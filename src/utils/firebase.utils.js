@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { getFirestore, getDocs, collection } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { getFirestore, getDocs, collection, addDoc } from "firebase/firestore";
+import { toCamalCase } from "./string.utils";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -56,12 +57,23 @@ const getPartsToSell = async () => {
 
 const uploadImage = (image, title) => {
   const storage = getStorage(app)
-  const storageRef = ref(storage, title);
+  const titleCamalCase = toCamalCase(title)
+  const storageRef = ref(storage, titleCamalCase);
 
   // 'file' comes from the Blob or File API
   uploadBytes(storageRef, image).then((snapshot) => {
     console.log('Uploaded a blob or file!');
   });
+
+  return titleCamalCase
 }
 
-export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage}
+const uploadPartDoc = async (title, description, fileName) => {
+  await addDoc(collection(db, "items"), {
+    title: title,
+    desciption: description,
+    img_location: fileName
+  });
+}
+
+export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage, uploadPartDoc}

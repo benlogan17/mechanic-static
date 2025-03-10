@@ -1,12 +1,18 @@
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Form, Modal, Button } from 'react-bootstrap';
+import { uploadImage, uploadPartDoc } from '../../utils/firebase.utils';
 
 export const AddPartModal = ({show, handleClose}) => {
     const handleSubmit = (event) => {
         event.preventDefault()
+        console.log(event)
         const title = event.target.title
         const description = event.target.description
         const file = event.target.file
+
+        const fileName = uploadImage(file, title)
+
+        uploadPartDoc(String(title), String(description), String(fileName))
+        handleClose()
     }
 
     return (

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { CardContainer } from "./Card/CardContainer"
-import { getPartsToSell, downloadAndSetImgUrl } from "../utils/firebase.utils"
+import { getPartsToSell, downloadAndSetImgUrl, auth } from "../utils/firebase.utils"
 import { Button } from "react-bootstrap"
+import { AddPartModal } from "./Card/AddPartModal"
 
 export const ItemPage = () => {
     const [items, setItems] = useState([])
@@ -22,7 +23,9 @@ export const ItemPage = () => {
     }, [items])
     return (
     <div>
-        <Button onClick={()=>setShowModal(true)}>Add Part</Button>
+        {
+            auth.currentUser !== null ? <Button onClick={()=>setShowModal(true)}>Add Part</Button> : <></>
+        }
         {
             items.map((part, index) => 
                 <CardContainer 
@@ -39,10 +42,3 @@ export const ItemPage = () => {
     </div>
     )
 }
-
-/*
-Actions this needs to do to work
- - Add Sellable part
- - Display sellable parts
- - Delete sellable parts
-*/
