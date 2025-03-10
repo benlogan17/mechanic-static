@@ -1,18 +1,31 @@
 import { Form, Modal, Button } from 'react-bootstrap';
 import { uploadImage, uploadPartDoc } from '../../utils/firebase.utils';
+import {getFileName, toCamalCase} from '../../utils/string.utils'
+import { useState } from 'react';
 
 export const AddPartModal = ({show, handleClose}) => {
+    const [error, setError] = useState("")
+    const [image, setImage] = useState('')
     const handleSubmit = (event) => {
         event.preventDefault()
         console.log(event)
-        const title = event.target.title
-        const description = event.target.description
-        const file = event.target.file
+        const title = event.target.title.value
+        const description = event.target.description.value
+        console.log(image)
+        const fileName = toCamalCase(getFileName(image.name))
 
-        const fileName = uploadImage(file, title)
 
-        uploadPartDoc(String(title), String(description), String(fileName))
-        handleClose()
+        uploadImage(image, fileName).then(
+        (result)=> {
+            console.log(result)
+            uploadPartDoc(title, description, fileName).then((result) => {
+                handleClose()
+            })
+        }, 
+        (rejected) => {
+            setError(rejected)
+        })
+    
     }
 
     return (
@@ -32,11 +45,12 @@ export const AddPartModal = ({show, handleClose}) => {
                 </Form.Group>
                 <Form.Group controlId="img" className="mb-3">
                     <Form.Label>Image of part</Form.Label>
-                    <Form.Control type="file" />
+                    <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
                 </Form.Group>
                 <Button type="submit" variant="primary">Add Part</Button>
             </Form>
         </Modal.Body>
+        <Modal.Footer>{error}</Modal.Footer>
     </Modal>
     )
 }

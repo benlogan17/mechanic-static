@@ -1,9 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, getDownloadURL, uploadBytes, getMetadata } from 'firebase/storage';
 import { getFirestore, getDocs, collection, addDoc } from "firebase/firestore";
-import { toCamalCase } from "./string.utils";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -55,25 +54,26 @@ const getPartsToSell = async () => {
   return getFullColllection("items")
 }
 
-const uploadImage = (image, title) => {
+const uploadImage = async (image, filename) => {
   const storage = getStorage(app)
-  const titleCamalCase = toCamalCase(title)
-  const storageRef = ref(storage, titleCamalCase);
+  const storageRef = ref(storage, filename);
+  const metadata = {
+    contentType: 'image/jpeg',
+  };
 
-  // 'file' comes from the Blob or File API
-  uploadBytes(storageRef, image).then((snapshot) => {
-    console.log('Uploaded a blob or file!');
-  });
-
-  return titleCamalCase
+  return uploadBytes(storageRef, image, metadata)
 }
 
-const uploadPartDoc = async (title, description, fileName) => {
-  await addDoc(collection(db, "items"), {
-    title: title,
-    desciption: description,
-    img_location: fileName
-  });
-}
+const uploadPartDoc = async (title, description, fileName) => await addDoc(collection(db, "items"), {title: title, description: description, img_location: fileName});
 
-export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage, uploadPartDoc}
+
+const checkMeta = (fileName) => {
+  const storage = getStorage(app)
+  const storageRef = ref(storage, fileName);
+
+  getMetadata(storageRef).then((result)=> {
+    console.log(result)
+  })
+} 
+
+export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage, uploadPartDoc, checkMeta}

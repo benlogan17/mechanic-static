@@ -13,3 +13,8 @@ export const toCamalCase = (value) => {
 
     return new_value
 }
+
+export const getFileName = (value) => {
+    const lastBackSlash = value.lastIndexOf("\\") + 1
+    return value.substring(lastBackSlash)
+}
