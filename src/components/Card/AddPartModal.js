@@ -47,7 +47,7 @@ export const AddPartModal = ({show, handleClose}) => {
                     <Form.Label>Image of part</Form.Label>
                     <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
                 </Form.Group>
-                <Button type="submit" variant="primary">Add Part</Button>
+                <Button className="button-part" type="submit" variant="primary">Add Part</Button>
             </Form>
         </Modal.Body>
         <Modal.Footer>{error}</Modal.Footer>

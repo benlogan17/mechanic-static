@@ -1,0 +1,15 @@
+.card-width {
+    width: 30% !important;
+}
+
+.button-part {
+    background-color: #b5a9b8 !important;
+    color: black !important;
+    border: none !important;
+}
+
+@media screen and (max-width: 700px) {
+    .card-width {
+        width: 100% !important;
+    }
+}

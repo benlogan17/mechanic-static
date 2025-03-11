@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, getDownloadURL, uploadBytes, getMetadata } from 'firebase/storage';
-import { getFirestore, getDocs, collection, addDoc } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytes, getMetadata, deleteObject } from 'firebase/storage';
+import { getFirestore, getDocs, collection, addDoc, deleteDoc, doc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -40,7 +40,12 @@ const getFullColllection = async (collectionName) => {
   const querySnapshot = await getDocs(collection(db, collectionName));
   const docs = []
   querySnapshot.forEach(element => {
-    docs.push(element.data())
+    const data = element.data()
+
+    docs.push({
+      "id": element.id,
+      ...data
+    })
   });
 
   return docs
@@ -66,7 +71,6 @@ const uploadImage = async (image, filename) => {
 
 const uploadPartDoc = async (title, description, fileName) => await addDoc(collection(db, "items"), {title: title, description: description, img_location: fileName});
 
-
 const checkMeta = (fileName) => {
   const storage = getStorage(app)
   const storageRef = ref(storage, fileName);
@@ -76,4 +80,13 @@ const checkMeta = (fileName) => {
   })
 } 
 
-export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage, uploadPartDoc, checkMeta}
+const deleteDocAndImage = (part_info) => {
+  const storage = getStorage(app)
+  const storageRef = ref(storage, part_info.img_location);
+
+  deleteObject(storageRef).then(result => {
+    deleteDoc(doc(db, "items", part_info.id))
+  })
+}
+
+export {auth, app, db, downloadAndSetImgUrl, getHomeInfo, getPartsToSell, uploadImage, uploadPartDoc, checkMeta, deleteDocAndImage}
